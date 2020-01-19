@@ -1,0 +1,63 @@
+﻿@model ProductListModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-controller="Admin" asp-action="CreateProduct" class="btn btn-primary">Create New</a>
+</p>
+
+@if (Model.Products.Count > 0)
+{
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th style="width:30px">
+                   Id
+                </th>
+                <th>
+                   Name
+                </th>
+                <th style="width:100px">
+                   ImageUrl
+                </th>
+                <th style="width:14px">
+                    Price
+                </th>
+                <th style="width:140px"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Products)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td width="80px">
+                        <img src="~/img/@item.ImageUrl" width="80" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "EditProduct", new { id=item.Id }, new {@class="btn btn-info btn-sm" }) |
+                        @Html.ActionLink("Delete", "DeleteProduct", new { id=item.Id }, new {@class="btn btn-danger btn-sm" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+<div class="alert alert-warning">
+    No Product!
+</div>
+}

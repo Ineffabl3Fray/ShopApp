@@ -1,0 +1,40 @@
+﻿@model ProductListModel
+@addTagHelper "*,Microsoft.AspNetCore.Mvc.TagHelpers"
+@addTagHelper "*,ShopApp.WebUI"
+
+@if (Model.Products != null)
+{
+    <div class="row">
+        @foreach (var item in Model.Products)
+        {
+            <div class="col-md-4">
+                <div class="card mb-3">
+                    <img src="~/img/@item.ImageUrl" alt="@item.Name" />
+                    <div class="card-body">
+                        <h4 class="card-title">
+                            <a href="#">@item.Name</a>
+                        </h4>
+                        <small class="text-muted">
+                            <i class="fas fa-lira-sign"></i> @item.Price
+                        </small>
+                    </div>
+                    <div class="card-footer text-center">
+                        <a asp-controller="Shop" asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm">Details</a>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <form asp-controller="Cart" asp-action="AddToCart" method="post" style="display:inline;">
+                                <input type="hidden" name="productId" value="@item.Id" />
+                                <input type="hidden" name="quantity" value="1" />
+                                <button type="submit" class="btn btn-outline-primary btn-sm ml-3">Add To Cart</button>
+                            </form>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <list-pager page-model="@Model.PageInfo">
+       
+    </list-pager>
+}

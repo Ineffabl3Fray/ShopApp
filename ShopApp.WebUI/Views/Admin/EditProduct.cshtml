@@ -1,0 +1,97 @@
+﻿@model ProductModel
+
+@{
+    ViewData["Title"] = "Edit";
+    var counter = 0;
+}
+
+<h1>Edit</h1>
+<hr />
+
+<form asp-action="EditProduct" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-8">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <input type="hidden" name="" value="@Model.Id" />
+                    <div class="form-group">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <label asp-for="ImageUrl" class="control-label col-md-2">Image</label>
+                            <div class="col-md-10">
+                                <input type="hidden" name="ImageUrl" value="@Model.ImageUrl" class="form-control" />
+                                <img src="~/img/@Model.ImageUrl" width="80" />
+                                <input type="file" name="file" value="" />
+                                <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-11">
+                    <div class="form-group">
+                        <label asp-for="Description" class="control-label"></label>
+                        <input id="editor" asp-for="Description" class="form-control" />
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <label asp-for="Price" class="control-label"></label>
+                        <input asp-for="Price" class="form-control" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-4">
+
+            @foreach (var item in Model.Categories)
+            {
+                var isChecked = string.Empty;
+                if (Model.SelectedCategories.Any(c => c.Id == item.Id))
+                {
+                    isChecked = "checked";
+                    <input type="hidden" name="SelectedCategories[@counter].Id" value="@item.Id" />
+                    <input type="hidden" name="SelectedCategories[@counter].Name" value="@item.Name" />
+                    counter++;
+                }
+                else { isChecked = ""; }
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox"
+                           name="categories"
+                           value="@item.Id"
+                           class="custom-control-input"
+                           id="category(@item.Id)"
+                           @isChecked>
+                    <label class="custom-control-label" for="category(@item.Id)">@item.Name</label>
+                </div>
+            }
+        </div>
+    </div>
+</form>
+
+<div>
+    <a asp-controller="Admin" asp-action="ProductList">Back to List</a>
+</div>
+
+
+
+<script src="/modules/ckeditor4/ckeditor.js"></script>
+<script>
+    CKEDITOR.replace("editor");
+</script>

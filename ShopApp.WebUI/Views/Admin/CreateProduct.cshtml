@@ -1,0 +1,71 @@
+﻿@model ShopApp.WebUI.Models.ProductModel
+
+@{
+    ViewData["Title"] = "CreateProduct";
+}
+
+
+<h1>CreateProduct</h1>
+<hr />
+
+<div class="row">
+    @if (!string.IsNullOrEmpty(ViewBag.error))
+    {
+        <div class="text-danger">
+            @ViewBag.error
+        </div>
+    }
+    <form asp-action="CreateProduct">
+
+        <div class="row">
+            <div class="col-md-8">
+                <div asp-validation-summary="All" class="text-danger"></div>
+
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ImageUrl" class="control-label">Image</label>
+                    <input asp-for="ImageUrl" class="form-control" />
+                    <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label"></label>
+                    <input id="editor" asp-for="Description" class="form-control" />
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label asp-for="Price" class="control-label"></label>
+                    <input asp-for="Price" class="form-control" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<div>
+    <a asp-controller="Admin" asp-action="Index">Back to List</a>
+</div>
+
+
+<script src="/modules/ckeditor4/ckeditor.js"></script>
+<script>
+    CKEDITOR.replace("editor");
+</script>
