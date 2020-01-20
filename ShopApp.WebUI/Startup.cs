@@ -75,13 +75,15 @@ namespace ShopApp.WebUI
             services.AddScoped<IProductService, EfProductManager>();
             services.AddScoped<ICategoryDal, EfCategoryDal>();
             services.AddScoped<ICategoryService, EfCategoryManager>();
+            services.AddScoped<ICartDal, EfCartDal>();
+            services.AddScoped<ICartService, CartManager>();
 
             services.AddTransient<IEmailSender, EmailSender>();
 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
            // env.IsProduction();
             if (env.IsDevelopment())
@@ -110,6 +112,8 @@ namespace ShopApp.WebUI
                     defaults: new { controller = "Shop", action = "List" });
 
             });
+
+            SeedIdentity.Seed(userManager, roleManager, Configuration).Wait();
         }
     }
 }

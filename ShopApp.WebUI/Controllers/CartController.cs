@@ -1,0 +1,59 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using ShopApp.Business.Abstract;
+using ShopApp.WebUI.Identity;
+using ShopApp.WebUI.Models.Cart;
+
+namespace ShopApp.WebUI.Controllers
+{
+    [Authorize]
+    public class CartController : Controller
+    {
+        private ICartService _cartService;
+        private UserManager<ApplicationUser> _userManager;
+
+        public CartController(ICartService cartService, UserManager<ApplicationUser> userManager)
+        {
+            _cartService = cartService;
+            _userManager = userManager;
+        }
+
+        public IActionResult Index()
+        {
+            var cart = _cartService.GetCartByUserId(_userManager.GetUserId(User));
+            var model = new CartModel
+            {
+                CartId = cart.Id,
+                CartItems = cart.CartItems.Select(c => new CartItemModel
+                {
+                    CartItemId = c.Id,
+                     ImageUrl = c.Product.ImageUrl,
+                      Name = c.Product.Name,
+                       Price = c.Product.Price, 
+                        ProductId = c.Product.Id,
+                         Quantity = c.Quantity
+                }).ToList()
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult AddToCart(int productId, int quantity)
+        {
+            _cartService.AddToCart(_userManager.GetUserId(User), productId, quantity);
+
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult DeleteFromCart(int productId)
+        {
+            _cartService.DeleteFromCart(_userManager.GetUserId(User), productId);
+            return RedirectToAction("Index");
+        }
+    }
+}

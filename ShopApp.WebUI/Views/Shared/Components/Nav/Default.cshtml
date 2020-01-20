@@ -9,18 +9,27 @@
         <ul class="navbar-nav mr-auto" style="user-select: auto;">
             @if (User.Identity.IsAuthenticated)
             {
-                <li class="nav-item active" style="user-select: auto;">
-                    <a class="nav-link" asp-controller="Admin" asp-action="CreateProduct" style="user-select: auto;">Add Product <span class="sr-only" style="user-select: auto;">(current)</span></a>
+                <li class="nav-item" style="user-select: auto;">
+                    <a class="nav-link" asp-controller="Cart" asp-action="Index" style="user-select: auto;">Cart</a>
                 </li>
                 <li class="nav-item" style="user-select: auto;">
-                    <a class="nav-link" asp-controller="Admin" asp-action="ProductList" style="user-select: auto;">Admin Products</a>
+                    <a class="nav-link" asp-controller="Admin" asp-action="CreateCategory" style="user-select: auto;">Order</a>
                 </li>
-                <li class="nav-item" style="user-select: auto;">
-                    <a class="nav-link" asp-controller="Admin" asp-action="CreateCategory" style="user-select: auto;">Add Categories</a>
-                </li>
-                <li class="nav-item" style="user-select: auto;">
-                    <a class="nav-link" asp-controller="Admin" asp-action="CategoryList" style="user-select: auto;">Admin Categories</a>
-                </li>
+                if (User.IsInRole("admin"))
+                {
+                    <li class="nav-item active" style="user-select: auto;">
+                        <a class="nav-link" asp-controller="Admin" asp-action="CreateProduct" style="user-select: auto;">Add Product <span class="sr-only" style="user-select: auto;">(current)</span></a>
+                    </li>
+                    <li class="nav-item" style="user-select: auto;">
+                        <a class="nav-link" asp-controller="Admin" asp-action="ProductList" style="user-select: auto;">Admin Products</a>
+                    </li>
+                    <li class="nav-item" style="user-select: auto;">
+                        <a class="nav-link" asp-controller="Admin" asp-action="CreateCategory" style="user-select: auto;">Add Categories</a>
+                    </li>
+                    <li class="nav-item" style="user-select: auto;">
+                        <a class="nav-link" asp-controller="Admin" asp-action="CategoryList" style="user-select: auto;">Admin Categories</a>
+                    </li>
+                }
             }
 
         </ul>

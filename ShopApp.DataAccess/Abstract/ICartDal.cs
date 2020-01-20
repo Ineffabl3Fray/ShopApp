@@ -1,0 +1,14 @@
+﻿using ShopApp.Core.DataAccess.Abstract;
+using ShopApp.Entities.Concrete;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace ShopApp.DataAccess.Abstract
+{
+    public interface ICartDal : IRepository<Cart>
+    {
+        Cart GetCartByUserId(string userId);
+        void DeleteFromCart(int cartId, int productId);
+    }
+}
