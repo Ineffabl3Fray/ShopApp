@@ -77,6 +77,8 @@ namespace ShopApp.WebUI
             services.AddScoped<ICategoryService, EfCategoryManager>();
             services.AddScoped<ICartDal, EfCartDal>();
             services.AddScoped<ICartService, CartManager>();
+            services.AddScoped<IOrderDal, EfOrderDal>();
+            services.AddScoped<IOrderService, OrderManager>();
 
             services.AddTransient<IEmailSender, EmailSender>();
 

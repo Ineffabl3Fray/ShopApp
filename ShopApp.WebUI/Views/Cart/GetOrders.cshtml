@@ -1,0 +1,70 @@
+﻿@model List<OrderListModel>
+@{
+    ViewData["Title"] = "GetOrders";
+}
+
+<h1>GetOrders</h1>
+<hr />
+
+
+@foreach (var item in Model)
+{
+    <table class="table table-bordered table-sm mb-3">
+        <thead class="bg-primary text-light">
+            <tr>
+                <td > Order Id: @item.OrderId</td>
+                <td></td>
+                <th>Price</th>
+                <th>Quantity</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var orderItem in item.OrderItems)
+            {
+                <tr>
+                    <td >
+                        <img src="~/img/1.jpg" width="50" />
+                    </td>
+                    <td>@orderItem.Name</td>
+                    <td>@orderItem.Price</td>
+                    <td>@orderItem.Quantity</td>
+                </tr>
+            }
+        </tbody>
+
+        <tfoot>
+            <tr>
+                <td > Customer Name: </td>
+                <td> @item.FirstName @item.LastName</td>
+                <td rowspan="3"> Total: @item.TotalPrice() TL</td>
+            </tr>
+
+            <tr>
+                <td> Adres: </td>
+                <td>@item.Address</td>
+            </tr>
+
+            <tr>
+                <td>Phone: </td>
+                <td>@item.Phone</td>
+            </tr>
+
+            <tr>
+                <td>Email: </td>
+                <td>@item.Email</td>
+            </tr>
+
+            <tr>
+                <td>Payment Status: </td>
+                <td>@item.PaymentTypes</td>
+            </tr>
+
+            <tr>
+                <td>Order Status: </td>
+                <td>@item.OrderState</td>
+            </tr>
+        </tfoot>
+    </table>
+}
+
